@@ -7,27 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Outlet } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { lime, deepOrange } from "@mui/material/colors";
 import SideBar from "../common/SideBar";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: lime[50],
-      main: lime[600],
-      dark: lime[900],
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: deepOrange[100],
-      main: deepOrange[300],
-      dark: deepOrange[800],
-      contrastText: "#fff",
-    },
-  },
-});
-
 const drawerWidth = 240;
 
 export default function AppLayout() {
@@ -50,56 +30,54 @@ export default function AppLayout() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
+    <Box
+      sx={{
+        display: "flex",
+        bgcolor: (theme) => theme.palette.primary.light,
+        minHeight: "100vh",
+      }}
+    >
+      <CssBaseline />
+      <AppBar
+        position="fixed"
         sx={{
-          display: "flex",
-          bgcolor: (theme) => theme.palette.primary.light,
-          minHeight: "100vh",
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          sx={{
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-            ml: { sm: `${drawerWidth}px` },
-          }}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Veggie app
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Veggie app
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
-        <SideBar
-          drawerWidth={drawerWidth}
-          mobileOpen={mobileOpen}
-          handleDrawerClose={handleDrawerClose}
-          handleDrawerTransitionEnd={handleDrawerTransitionEnd}
-        />
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: 3,
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-          }}
-        >
-          <Toolbar />
-          <Outlet />
-        </Box>
+      <SideBar
+        drawerWidth={drawerWidth}
+        mobileOpen={mobileOpen}
+        handleDrawerClose={handleDrawerClose}
+        handleDrawerTransitionEnd={handleDrawerTransitionEnd}
+      />
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+        }}
+      >
+        <Toolbar />
+        <Outlet />
       </Box>
-    </ThemeProvider>
+    </Box>
   );
 }
