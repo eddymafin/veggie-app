@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./pages/Home";
 import Report from "./pages/Report";
@@ -9,6 +10,7 @@ import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 
 function App() {
+  const [contents, setContents] = useState([]);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
