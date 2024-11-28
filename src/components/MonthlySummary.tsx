@@ -1,7 +1,13 @@
 import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
+import { Contents } from "../types";
 
-function MonthlySummary() {
+interface monthlySummaryProps {
+  monthlyContents: Contents[];
+}
+
+function MonthlySummary({ monthlyContents }: monthlySummaryProps) {
+  console.log(monthlyContents);
   return (
     <Grid container spacing={{ xs: 2, sm: 3 }}>
       <Grid item xs={6}>
