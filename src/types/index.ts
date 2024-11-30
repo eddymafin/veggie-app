@@ -10,3 +10,9 @@ export interface Contents {
   type: ContentType;
   category: VeggieCategory | FruitCategory;
 }
+
+export interface Total {
+  veggieCount: number;
+  fruitCount: number;
+  total: number;
+}
