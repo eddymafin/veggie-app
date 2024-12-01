@@ -4,7 +4,8 @@ import jaLocale from "@fullcalendar/core/locales/ja";
 import "../styles/calender.css";
 import { EventContentArg } from "@fullcalendar/core";
 import { calculateDailyTotals } from "../utils/calculateDailyTotals";
-import { Contents } from "../types";
+import { CalenderContent, Contents, Total } from "../types";
+import { formatNumber } from "../utils/formatting";
 
 interface CalenderProps {
   monthlyContents: Contents[];
@@ -29,8 +30,27 @@ function Calender({ monthlyContents }: CalenderProps) {
     },
   ];
 
+  // 日ごとのデータを計算する関数
   const dailyTotal = calculateDailyTotals(monthlyContents);
   console.log(dailyTotal);
+
+  // カレンダー用のイベントを作成する関数
+  const createCalenderEvents = (
+    dailyTotals: Record<string, Total>
+  ): CalenderContent[] => {
+    return Object.keys(dailyTotals).map((date) => {
+      // 日付をkeyにして、値を展開する。これはnumber型なので、文字列に変換する必要がある
+      const { veggieCount, fruitCount, total } = dailyTotals[date];
+      return {
+        start: date,
+        veggieCount: formatNumber(veggieCount),
+        fruitCount: formatNumber(fruitCount),
+        total: formatNumber(total),
+      };
+    });
+  };
+  const CalenderEvents = createCalenderEvents(dailyTotal);
+  console.log(CalenderEvents);
 
   const renderEventContent = (eventInfo: EventContentArg) => {
     // console.log(eventInfo);
@@ -47,7 +67,7 @@ function Calender({ monthlyContents }: CalenderProps) {
       locale={jaLocale}
       plugins={[dayGridPlugin]}
       initialView="dayGridMonth"
-      events={events}
+      events={CalenderEvents}
       eventContent={renderEventContent}
     ></FullCalendar>
   );

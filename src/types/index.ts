@@ -16,3 +16,10 @@ export interface Total {
   fruitCount: number;
   total: number;
 }
+
+export interface CalenderContent {
+  start: string;
+  veggieCount: string;
+  fruitCount: string;
+  total: string;
+}
