@@ -1,5 +1,4 @@
 import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
 import { Contents } from "../types";
 import { plantCalculations } from "../utils/plantCalculations";
 

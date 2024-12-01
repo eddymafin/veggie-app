@@ -1,5 +1,4 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box } from "@mui/material";
 import MonthlySummary from "../components/MonthlySummary";
 import Calender from "../components/Calender";
 import TransactionMenu from "../components/TransactionForm";
@@ -15,7 +14,7 @@ function Home({ monthlyContents }: HomeProps) {
     <>
       <Box>
         <MonthlySummary monthlyContents={monthlyContents} />
-        <Calender />
+        <Calender monthlyContents={monthlyContents} />
       </Box>
       <Box>
         <TransactionMenu />
