@@ -7,14 +7,18 @@ import { Contents } from "../types";
 
 interface HomeProps {
   monthlyContents: Contents[];
+  setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-function Home({ monthlyContents }: HomeProps) {
+function Home({ monthlyContents, setCurrentMonth }: HomeProps) {
   return (
     <>
       <Box>
         <MonthlySummary monthlyContents={monthlyContents} />
-        <Calender monthlyContents={monthlyContents} />
+        <Calender
+          monthlyContents={monthlyContents}
+          setCurrentMonth={setCurrentMonth}
+        />
       </Box>
       <Box>
         <TransactionMenu />

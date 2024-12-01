@@ -2,16 +2,17 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import jaLocale from "@fullcalendar/core/locales/ja";
 import "../styles/calender.css";
-import { EventContentArg } from "@fullcalendar/core";
+import { DatesSetArg, EventContentArg } from "@fullcalendar/core";
 import { calculateDailyTotals } from "../utils/calculateDailyTotals";
 import { CalenderContent, Contents, Total } from "../types";
 import { formatNumber } from "../utils/formatting";
 
 interface CalenderProps {
   monthlyContents: Contents[];
+  setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-function Calender({ monthlyContents }: CalenderProps) {
+function Calender({ monthlyContents, setCurrentMonth }: CalenderProps) {
   // デフォルトのものとカスタムプロパティも追加できる
   const events = [
     {
@@ -52,6 +53,12 @@ function Calender({ monthlyContents }: CalenderProps) {
   const CalenderEvents = createCalenderEvents(dailyTotal);
   console.log(CalenderEvents);
 
+  const handleDateSet = (datesetInfo: DatesSetArg) => {
+    // console.log(datesetInfo);
+    // date-fnsで、下記にカレンダーの矢印をクリックされたときの日付が格納されている
+    setCurrentMonth(datesetInfo.view.currentStart);
+  };
+
   const renderEventContent = (eventInfo: EventContentArg) => {
     // console.log(eventInfo);
     return (
@@ -69,6 +76,7 @@ function Calender({ monthlyContents }: CalenderProps) {
       initialView="dayGridMonth"
       events={CalenderEvents}
       eventContent={renderEventContent}
+      datesSet={handleDateSet}
     ></FullCalendar>
   );
 }
