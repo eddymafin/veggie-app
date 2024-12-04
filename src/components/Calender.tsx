@@ -6,13 +6,19 @@ import { DatesSetArg, EventContentArg } from "@fullcalendar/core";
 import { calculateDailyTotals } from "../utils/calculateDailyTotals";
 import { CalenderContent, Contents, Total } from "../types";
 import { formatNumber } from "../utils/formatting";
+import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 
 interface CalenderProps {
   monthlyContents: Contents[];
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
+  setCurrentDay: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Calender({ monthlyContents, setCurrentMonth }: CalenderProps) {
+function Calender({
+  monthlyContents,
+  setCurrentMonth,
+  setCurrentDay,
+}: CalenderProps) {
   // デフォルトのものとカスタムプロパティも追加できる
   const events = [
     {
@@ -59,6 +65,12 @@ function Calender({ monthlyContents, setCurrentMonth }: CalenderProps) {
     setCurrentMonth(datesetInfo.view.currentStart);
   };
 
+  // 選択した日付を取得
+  const handleDateClick = (dateInfo: DateClickArg) => {
+    console.log(dateInfo);
+    setCurrentDay(dateInfo.dateStr);
+  };
+
   const renderEventContent = (eventInfo: EventContentArg) => {
     // console.log(eventInfo);
     return (
@@ -72,11 +84,12 @@ function Calender({ monthlyContents, setCurrentMonth }: CalenderProps) {
   return (
     <FullCalendar
       locale={jaLocale}
-      plugins={[dayGridPlugin]}
+      plugins={[dayGridPlugin, interactionPlugin]}
       initialView="dayGridMonth"
       events={CalenderEvents}
       eventContent={renderEventContent}
       datesSet={handleDateSet}
+      dateClick={handleDateClick}
     ></FullCalendar>
   );
 }
