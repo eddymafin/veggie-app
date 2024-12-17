@@ -1,7 +1,14 @@
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import React from "react";
+import { Contents } from "../types";
+import { plantCalculations } from "../utils/plantCalculations";
 
-const DailySummary = () => {
+interface DailySummaryProps {
+  dailyContents: Contents[];
+}
+
+const DailySummary = ({ dailyContents }: DailySummaryProps) => {
+  const { veggieCount, fruitCount, total } = plantCalculations(dailyContents);
   return (
     <Box>
       <Grid container spacing={2}>
@@ -12,7 +19,7 @@ const DailySummary = () => {
           >
             <CardContent>
               <Typography variant="body2" noWrap textAlign="center">
-                収入
+                野菜
               </Typography>
               <Typography
                 sx={{
@@ -22,7 +29,7 @@ const DailySummary = () => {
                 textAlign="right"
                 fontWeight="fontWeightBold"
               >
-                ¥500
+                {veggieCount}
               </Typography>
             </CardContent>
           </Card>
@@ -34,7 +41,7 @@ const DailySummary = () => {
           >
             <CardContent>
               <Typography variant="body2" noWrap textAlign="center">
-                支出
+                果物
               </Typography>
               <Typography
                 sx={{
@@ -44,7 +51,7 @@ const DailySummary = () => {
                 textAlign="right"
                 fontWeight="fontWeightBold"
               >
-                ¥300
+                {fruitCount}
               </Typography>
             </CardContent>
           </Card>
@@ -56,7 +63,7 @@ const DailySummary = () => {
           >
             <CardContent>
               <Typography variant="body2" noWrap textAlign="center">
-                残高
+                Total
               </Typography>
               <Typography
                 sx={{
@@ -66,7 +73,7 @@ const DailySummary = () => {
                 textAlign="right"
                 fontWeight="fontWeightBold"
               >
-                ¥200
+                {total}
               </Typography>
             </CardContent>
           </Card>

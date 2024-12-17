@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import MonthlySummary from "../components/MonthlySummary";
 import Calender from "../components/Calender";
-import TransactionMenu from "../components/TransactionForm";
-import TransactionForm from "../components/TransactionMenu";
+import TransactionForm from "../components/TransactionForm";
+import TransactionMenu from "../components/TransactionMenu";
 import { Contents } from "../types";
 import { format } from "date-fns";
 
@@ -14,13 +14,16 @@ interface HomeProps {
 
 function Home({ monthlyContents, setCurrentMonth }: HomeProps) {
   const today = format(new Date(), "yyyy-MM-dd");
-  const [currentDay, setCurrentDay] = useState(today);
-  console.log(currentDay);
 
+  // 日付の管理
+  const [currentDay, setCurrentDay] = useState(today);
+  // console.log(currentDay);
+
+  // 1日分のデータを取得
   const dailyContents = monthlyContents.filter((content) => {
     return content.date === currentDay;
   });
-  console.log(dailyContents);
+  // console.log(dailyContents);
   return (
     <>
       <Box>
@@ -32,7 +35,10 @@ function Home({ monthlyContents, setCurrentMonth }: HomeProps) {
         />
       </Box>
       <Box>
-        <TransactionMenu />
+        <TransactionMenu
+          dailyContents={dailyContents}
+          currentDay={currentDay}
+        />
         <TransactionForm />
       </Box>
     </>
